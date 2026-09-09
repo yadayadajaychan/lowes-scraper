@@ -5,6 +5,12 @@ async function getHtml(url) {
 		channel: 'chrome',
 		headless: false,
 		viewport: null,
+		proxy: {
+			server: "http://proxy.mrscraper.com:10000",
+			username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-worker1-sesstime-30`,
+			password: process.env.MRSCRAPER_PASSWORD,
+		},
+
 	});
 
 	try {
@@ -26,7 +32,10 @@ async function getHtml(url) {
 
 
 //const testUrl = 'https://www.lowes.com/pd/Holland-Red-Charcoal-Concrete-Paver-Common-8-in-x-4-in-Actual-7-75-in-x-3-88-in/3010214'
-const testUrl = 'https://www.lowes.com/pd/DEWALT-20V-MAX-XR-Brushless-4-Tool-Combo-Kit-with-POWERSTACK-Compact-Battery-5-0Ah-Battery-Charger-and-Tool-Bag/5013264073'
+//const testUrl = 'https://www.lowes.com/pd/DEWALT-20V-MAX-XR-Brushless-4-Tool-Combo-Kit-with-POWERSTACK-Compact-Battery-5-0Ah-Battery-Charger-and-Tool-Bag/5013264073'
+const testUrl = 'https://ip.nijika.org'
+
+process.loadEnvFile('.env')
 
 const html = await getHtml(testUrl);
 
