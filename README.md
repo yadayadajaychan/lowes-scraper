@@ -4,7 +4,11 @@ This program scrapes Lowes product detail pages (PDPs).
 
 ## Requirements
 
-Requires nodejs, npm, Google Chrome, a graphical environment, and access to [Mr. Scraper proxies](https://mrscraper.com/).
+Requires nodejs,
+npm,
+Google Chrome,
+[Xvfb](https://en.wikipedia.org/wiki/Xvfb),
+and access to [Mr. Scraper proxies](https://mrscraper.com/).
 
 ## Setup
 

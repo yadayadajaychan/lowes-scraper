@@ -5,6 +5,7 @@ export async function getHtml(url) {
 		channel: 'chrome',
 		headless: false,
 		viewport: null,
+		args: [	'--ozone-platform=x11' ],
 		proxy: {
 			server: "http://proxy.mrscraper.com:10000",
 			username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-worker1-sesstime-30`,

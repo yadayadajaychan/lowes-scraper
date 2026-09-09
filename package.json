@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "dev": "xvfb-run -a --server-args='-screen 0 1920x1080x24' nodemon src/server.js",
+    "start": "xvfb-run -a --server-args='-screen 0 1920x1080x24' node src/server.js"
   },
   "keywords": [],
   "type": "module",
