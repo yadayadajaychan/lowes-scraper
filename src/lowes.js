@@ -1,5 +1,22 @@
 import { chromium } from 'patchright';
 
+export async function scrapeLowes(context, url) {
+	const page = await context.newPage();
+
+	try {
+		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20_000 });
+		await page.locator('span[class="item-price-dollar"]').first()
+			.waitFor({ timeout: 10_000 })
+			.catch(() => console.warn('[warn] price never appeared'));
+
+		const html = await page.content();
+		return html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+	} finally {
+		await page.close().catch(() => {});
+	}
+}
+
+
 export async function getHtml(url) {
 	const context = await chromium.launchPersistentContext('./profile', {
 		channel: 'chrome',
