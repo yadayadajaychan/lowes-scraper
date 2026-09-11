@@ -13,7 +13,7 @@ This program scrapes Lowes product detail pages (PDPs).
 
 ## Setup
 
-TODO
+Run `npm install`.
 
 Copy `example.env` to `.env` and fill out the Mr. Scraper proxy username and password,
 as well as the worker pool size and the TCP port for the API to listen on.
