@@ -6,6 +6,7 @@ process.loadEnvFile('.env')
 
 const POOL_SIZE = Number(process.env.POOL_SIZE) || 1;
 
+const rand = Math.random().toString(32).slice(2,10);
 const pool = await createPool(POOL_SIZE, (label, generation) => ({
 	channel: 'chrome',
 	headless: false,
@@ -13,7 +14,7 @@ const pool = await createPool(POOL_SIZE, (label, generation) => ({
 	args: [	'--ozone-platform=x11' ],
 	proxy: {
 		server: "http://proxy.mrscraper.com:10000",
-		username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-${label}g${generation}-sesstime-10`,
+		username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-${label}g${generation}x${rand}-sesstime-10`,
 		password: process.env.MRSCRAPER_PASSWORD,
 	},
 }));
@@ -30,7 +31,7 @@ app.get("/lowes", async (req, res) => {
 	try {
 		res.type('html').send(await pool.run((ctx) => scrapeLowes(ctx, productUrl)));
 	} catch (err) {
-		console.error(err);
+		console.error(`attempt limit exceeded: ${err.message}`);
 		res.status(500).send(`${err.message}\n`);
 	}
 });
