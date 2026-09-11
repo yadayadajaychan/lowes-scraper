@@ -4,7 +4,7 @@ export async function scrapeLowes(context, url) {
 	const page = await context.newPage();
 
 	try {
-		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20_000 });
+		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10_000 });
 		await page.locator('span[class="item-price-dollar"]').first()
 			.waitFor({ timeout: 10_000 })
 			.catch(() => console.warn('[warn] price never appeared'));
@@ -25,7 +25,7 @@ export async function getHtml(url) {
 		args: [	'--ozone-platform=x11' ],
 		proxy: {
 			server: "http://proxy.mrscraper.com:10000",
-			username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-worker1-sesstime-30`,
+			username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-worker1-sesstime-10`,
 			password: process.env.MRSCRAPER_PASSWORD,
 		},
 

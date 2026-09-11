@@ -13,7 +13,7 @@ const pool = await createPool(POOL_SIZE, (label, generation) => ({
 	args: [	'--ozone-platform=x11' ],
 	proxy: {
 		server: "http://proxy.mrscraper.com:10000",
-		username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-${label}g${generation}-sesstime-20`,
+		username: `${process.env.MRSCRAPER_USERNAME}-country-us-sessid-${label}g${generation}-sesstime-10`,
 		password: process.env.MRSCRAPER_PASSWORD,
 	},
 }));

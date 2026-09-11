@@ -1,7 +1,7 @@
 import { chromium } from 'patchright';
 import fs from 'node:fs/promises';
 
-const MAX_AGE_MS = 15 * 60_000;
+const MAX_AGE_MS = 5 * 60_000;
 const RESTART_DELAY_MS = 5_000;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
