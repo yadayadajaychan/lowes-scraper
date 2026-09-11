@@ -7,7 +7,6 @@ export async function scrapeLowes(context, url) {
 		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10_000 });
 		await page.locator('span[class="item-price-dollar"]').first()
 			.waitFor({ timeout: 10_000 })
-			.catch(() => console.warn('[warn] price never appeared'));
 
 		const html = await page.content();
 		return html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');

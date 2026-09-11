@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 
 const MAX_AGE_MS = 5 * 60_000;
 const RESTART_DELAY_MS = 5_000;
+const RETRY_ATTEMPTS = 5;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -70,13 +71,19 @@ export async function createPool(size, launchOptions) {
 
 	return {
 		async run(task) {
-			const worker = idle.shift() ?? await new Promise((r) => queue.push(r));
-			if (stale(worker))
-				await restart(worker);
-			try {
-				return await task(worker.context, worker.label);
-			} finally {
-				release(worker).catch((e) => console.error('[pool] worker release failed', e));
+			for (let attempt = 1; ; attempt++) {
+				const worker = idle.shift() ?? await new Promise((r) => queue.push(r));
+				if (stale(worker))
+					await restart(worker);
+				try {
+					return await task(worker.context, worker.label);
+				} catch (err) {
+					worker.dead = true;
+					if (attempt >= RETRY_ATTEMPTS) throw err;
+					console.warn(`[pool] ${worker.label}g${worker.generation} attempt ${attempt} failed: ${err.message}`);
+				} finally {
+					release(worker).catch((e) => console.error('[pool] worker release failed', e));
+				}
 			}
 		},
 		close: () => Promise.all(idle.map((w) => w.context?.close().catch(() => {}))),
