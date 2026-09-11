@@ -5,6 +5,7 @@ import { scrapeLowes } from "./lowes.js";
 process.loadEnvFile('.env')
 
 const POOL_SIZE = Number(process.env.POOL_SIZE) || 1;
+const PORT = Number(process.env.PORT) || 3000;
 
 const rand = Math.random().toString(32).slice(2,10);
 const pool = await createPool(POOL_SIZE, (label, generation) => ({
@@ -36,4 +37,4 @@ app.get("/lowes", async (req, res) => {
 	}
 });
 
-app.listen(3000, () => console.log("listening on 0.0.0.0 port 3000"))
+app.listen(PORT, () => console.log(`listening on 0.0.0.0 port ${PORT}`))
